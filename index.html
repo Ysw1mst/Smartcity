@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>지진 대피 시뮬레이션</title>
+  <style>
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    #map {
+      height: 600px;
+      width: 80%;
+      margin-top: 20px;
+    }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jU"></script>
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        alert("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+      }
+    }
+
+    function showPosition(position) {
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+
+      var geocoder = new google.maps.Geocoder();
+      var latlng = new google.maps.LatLng(latitude, longitude);
+
+      geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[0]) {
+            var address = results[0].formatted_address;
+            document.getElementById("location").innerText = "현재 위치: " + address;
+
+            // 지도 표시
+            var mapOptions = {
+              center: latlng,
+              zoom: 17
+            };
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            var marker = new google.maps.Marker({
+              position: latlng,
+              map: map
+            });
+
+            // TODO: 지진 데이터를 가져와서 마커로 표시하는 로직 추가
+          } else {
+            document.getElementById("location").innerText = "주소를 찾을 수 없습니다.";
+          }
+        } else {
+          document.getElementById("location").innerText = "주소 변환에 실패했습니다.";
+        }
+      });
+    }
+
+    function showError(error) {
+      // 오류 처리 코드
+    }
+  </script>
+</head>
+<body onload="getLocation()">
+  <div id="container">
+    <h1 id="location"></h1>
+    <div id="map"></div>
+  </div>
+</body>
+</html>
