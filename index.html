@@ -18,59 +18,23 @@
       margin-top: 20px;
     }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jUY"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jUY&callback=initMap" async defer></script>
   <script>
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
-      } else {
-        alert("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
-      }
-    }
-
-    function showPosition(position) {
-      var latitude = position.coords.latitude;
-      var longitude = position.coords.longitude;
-
-      var geocoder = new google.maps.Geocoder();
-      var latlng = new google.maps.LatLng(latitude, longitude);
-
-      geocoder.geocode({ 'latLng': latlng }, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          if (results[0]) {
-            var address = results[0].formatted_address;
-            document.getElementById("location").innerText = "현재 위치: " + address;
-
-            // 지도 표시
-            var mapOptions = {
-              center: latlng,
-              zoom: 17
-            };
-            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-            var marker = new google.maps.Marker({
-              position: latlng,
-              map: map
-            });
-
-            // CSV 파일 로드
-            fetch('./대피소.csv')
-              .then(response => response.text())
-              .then(data => {
-                const markers = parseCSVData(data);
-                displayMarkers(markers, map);
-              })
-              .catch(error => console.error('Error:', error));
-          } else {
-            document.getElementById("location").innerText = "주소를 찾을 수 없습니다.";
-          }
-        } else {
-          document.getElementById("location").innerText = "주소 변환에 실패했습니다.";
-        }
-      });
-    }
-
-    function showError(error) {
-      // 오류 처리 코드
+    function initMap() {
+      var mapOptions = {
+        center: { lat: 37.5665, lng: 126.9780 },
+        zoom: 10
+      };
+      var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      
+      // CSV 파일 로드
+      fetch('./대피소.csv')
+        .then(response => response.text())
+        .then(data => {
+          const markers = parseCSVData(data);
+          displayMarkers(markers, map);
+        })
+        .catch(error => console.error('Error:', error));
     }
 
     function parseCSVData(csvData) {
@@ -116,10 +80,11 @@
     }
   </script>
 </head>
-<body onload="getLocation()">
+<body>
   <div id="container">
-    <h1 id="location"></h1>
+    <h1>지진 대피 시뮬레이션</h1>
     <div id="map"></div>
   </div>
 </body>
 </html>
+
