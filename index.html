@@ -18,15 +18,27 @@
       margin-top: 20px;
     }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jUY&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jUY"></script>
   <script>
-    function initMap() {
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        alert("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+      }
+    }
+
+    function showPosition(position) {
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+
+      var latlng = new google.maps.LatLng(latitude, longitude);
       var mapOptions = {
-        center: { lat: 37.5665, lng: 126.9780 },
-        zoom: 10
+        center: latlng,
+        zoom: 17
       };
       var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-      
+
       // CSV 파일 로드
       fetch('./대피소.csv')
         .then(response => response.text())
@@ -35,6 +47,10 @@
           displayMarkers(markers, map);
         })
         .catch(error => console.error('Error:', error));
+    }
+
+    function showError(error) {
+      alert("위치 정보를 가져올 수 없습니다.");
     }
 
     function parseCSVData(csvData) {
@@ -80,11 +96,10 @@
     }
   </script>
 </head>
-<body>
+<body onload="getLocation()">
   <div id="container">
     <h1>지진 대피 시뮬레이션</h1>
     <div id="map"></div>
   </div>
 </body>
 </html>
-
