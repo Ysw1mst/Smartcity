@@ -18,7 +18,7 @@
       margin-top: 20px;
     }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jU"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jUY"></script>
   <script>
     function getLocation() {
       if (navigator.geolocation) {
@@ -52,7 +52,14 @@
               map: map
             });
 
-            // TODO: 지진 데이터를 가져와서 마커로 표시하는 로직 추가
+            // CSV 파일 로드
+            fetch('./대피소.csv')
+              .then(response => response.text())
+              .then(data => {
+                const markers = parseCSVData(data);
+                displayMarkers(markers, map);
+              })
+              .catch(error => console.error('Error:', error));
           } else {
             document.getElementById("location").innerText = "주소를 찾을 수 없습니다.";
           }
@@ -64,6 +71,48 @@
 
     function showError(error) {
       // 오류 처리 코드
+    }
+
+    function parseCSVData(csvData) {
+      const lines = csvData.split('\n');
+      const markers = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line !== '') {
+          const values = line.split(',');
+          const name = values[0].trim();
+          const latitude = parseFloat(values[1]);
+          const longitude = parseFloat(values[2]);
+          const phoneNumber = values[3].trim();
+
+          if (!isNaN(latitude) && !isNaN(longitude)) {
+            markers.push({ name, latitude, longitude, phoneNumber });
+          }
+        }
+      }
+
+      return markers;
+    }
+
+    function displayMarkers(markers, map) {
+      markers.forEach(marker => {
+        const position = new google.maps.LatLng(marker.latitude, marker.longitude);
+        const infoWindowContent = `
+          <h3>${marker.name}</h3>
+          <p>전화번호: ${marker.phoneNumber}</p>
+        `;
+        const infoWindow = new google.maps.InfoWindow({ content: infoWindowContent });
+
+        const markerObj = new google.maps.Marker({
+          position,
+          map
+        });
+
+        markerObj.addListener('click', function() {
+          infoWindow.open(map, markerObj);
+        });
+      });
     }
   </script>
 </head>
