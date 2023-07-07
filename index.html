@@ -18,8 +18,12 @@
       margin-top: 20px;
     }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jUY"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jUY&callback=initMap" async defer></script>
   <script>
+    function initMap() {
+      getLocation();
+    }
+
     function getLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -96,7 +100,7 @@
     }
   </script>
 </head>
-<body onload="getLocation()">
+<body>
   <div id="container">
     <h1>지진 대피 시뮬레이션</h1>
     <div id="map"></div>
