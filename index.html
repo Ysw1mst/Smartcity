@@ -3,23 +3,18 @@
 <head>
   <title>지진 대피 시뮬레이션</title>
   <style>
-#container {
+      #container {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
       text-align: center;
-    }
-
-    #map {
-      height: 600px;
-      width: 80%;
-      margin-top: 20px;
-    }
   </style>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jU&callback=initMap" async defer></script>
   <script>
+    var currentLocationMarker; // 현재 위치 마커 변수 추가
+
     function initMap() {
       getLocation();
     }
@@ -43,13 +38,25 @@
       };
       var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
+      // 현재 위치에 마커 추가
+      currentLocationMarker = new google.maps.Marker({
+        position: latlng,
+        map: map,
+        title: "현재 위치"
+      });
+
       // CSV 파일 로드
       fetch('./대피소.csv')
         .then(response => response.text())
         .then(data => {
           const markers = parseCSVData(data);
+
+          // 기존 마커 삭제
+          clearMarkers();
+
+          // 대피소 마커 표시
           displayMarkers(markers, map);
-          showAddress(markers, latitude, longitude); // 도로명 주소 출력 함수 호출
+          showAddress(latitude, longitude); // 도로명 주소 출력 함수 호출
         })
         .catch(error => console.error('Error:', error));
     }
@@ -63,10 +70,32 @@
     }
 
     function displayMarkers(markers, map) {
-      // displayMarkers 함수는 이전 코드와 동일합니다.
+      markers.forEach(marker => {
+        const position = new google.maps.LatLng(marker.latitude, marker.longitude);
+        const infoWindowContent = `
+          <h3>${marker.name}</h3>
+          <p>전화번호: ${marker.phoneNumber}</p>
+        `;
+        const infoWindow = new google.maps.InfoWindow({ content: infoWindowContent });
+
+        const markerObj = new google.maps.Marker({
+          position,
+          map
+        });
+
+        markerObj.addListener('click', function() {
+          infoWindow.open(map, markerObj);
+        });
+      });
     }
 
-    function showAddress(markers, latitude, longitude) {
+    function clearMarkers() {
+      if (currentLocationMarker) {
+        currentLocationMarker.setMap(null); // 현재 위치 마커 삭제
+      }
+    }
+
+    function showAddress(latitude, longitude) {
       var geocoder = new google.maps.Geocoder();
       var latlng = new google.maps.LatLng(latitude, longitude);
 
