@@ -10,11 +10,16 @@
       justify-content: center;
       height: 100vh;
       text-align: center;
-  </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jUY&callback=initMap" async defer></script>
-  <script>
-    var currentLocationMarker; // 현재 위치 마커 변수 추가
+    }
 
+    #map {
+      height: 600px;
+      width: 80%;
+      margin-top: 20px;
+    }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jU&callback=initMap" async defer></script>
+  <script>
     function initMap() {
       getLocation();
     }
@@ -38,23 +43,12 @@
       };
       var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-      // 현재 위치에 마커 추가
-      currentLocationMarker = new google.maps.Marker({
-        position: latlng,
-        map: map,
-        title: "현재 위치"
-      });
-
       // CSV 파일 로드
       fetch('./대피소.csv')
         .then(response => response.text())
         .then(data => {
           const markers = parseCSVData(data);
-
-          // 대피소 마커 표시
-          markers.push({ name: "현재 위치", latitude, longitude }); // 현재 위치 마커 정보 추가
           displayMarkers(markers, map);
-          showAddress(latitude, longitude); // 도로명 주소 출력 함수 호출
         })
         .catch(error => console.error('Error:', error));
     }
@@ -64,7 +58,25 @@
     }
 
     function parseCSVData(csvData) {
-      // parseCSVData 함수는 이전 코드와 동일합니다.
+      const lines = csvData.split('\n');
+      const markers = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line !== '') {
+          const values = line.split(',');
+          const name = values[0].trim();
+          const latitude = parseFloat(values[1]);
+          const longitude = parseFloat(values[2]);
+          const phoneNumber = values[3].trim();
+
+          if (!isNaN(latitude) && !isNaN(longitude)) {
+            markers.push({ name, latitude, longitude, phoneNumber });
+          }
+        }
+      }
+
+      return markers;
     }
 
     function displayMarkers(markers, map) {
@@ -86,30 +98,12 @@
         });
       });
     }
-
-    function showAddress(latitude, longitude) {
-      var geocoder = new google.maps.Geocoder();
-      var latlng = new google.maps.LatLng(latitude, longitude);
-
-      geocoder.geocode({ 'location': latlng }, function (results, status) {
-        if (status === 'OK') {
-          if (results[0]) {
-            var address = results[0].formatted_address;
-            var addressContainer = document.getElementById('address');
-            addressContainer.innerHTML = '현재 위치: ' + address;
-          }
-        } else {
-          alert('주소를 가져올 수 없습니다.');
-        }
-      });
-    }
   </script>
 </head>
 <body>
   <div id="container">
     <h1>지진 대피 시뮬레이션</h1>
     <div id="map"></div>
-    <div id="address"></div> <!-- 주소를 출력할 요소 추가 -->
   </div>
 </body>
 </html>
