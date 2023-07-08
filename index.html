@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
+  <meta charset="UTF-8">
   <title>지진 대피 시뮬레이션</title>
   <style>
     #container {
@@ -18,7 +19,7 @@
       margin-top: 20px;
     }
   </style>
-  <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6lcb5pk9bx" charset="utf-8"></script>
+  <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=YOUR_CLIENT_ID" charset="utf-8"></script>
   <script>
     function initMap() {
       getLocation();
@@ -32,95 +33,74 @@
       }
     }
 
-function showPosition(position) {
-  var latitude = position.coords.latitude;
-  var longitude = position.coords.longitude;
+    function showPosition(position) {
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
 
-  var mapOptions = {
-    center: new naver.maps.LatLng(latitude, longitude),
-    zoom: 17
-  };
-  var map = new naver.maps.Map(document.getElementById("map"), mapOptions);
+      var mapOptions = {
+        center: new naver.maps.LatLng(latitude, longitude),
+        zoom: 17
+      };
+      var map = new naver.maps.Map(document.getElementById("map"), mapOptions);
 
-  // 현재 위치 마커 추가
-  showCurrentLocationMarker(map, latitude, longitude);
+      // 현재 위치 마커 추가
+      showCurrentLocationMarker(map, latitude, longitude);
 
-  // CSV 파일 로드
-  fetch('./대피소.csv')
-    .then(response => response.text())
-    .then(data => {
-      const markers = parseCSVData(data);
-      displayMarkers(markers, map, latitude, longitude);
-    })
-    .catch(error => console.error('Error:', error));
-}
+      // CSV 파일 로드
+      fetch('./대피소.csv')
+        .then(response => response.text())
+        .then(data => {
+          const markers = parseCSVData(data);
+          displayMarkers(markers, map);
+        })
+        .catch(error => console.error('Error:', error));
+    }
 
-function displayMarkers(markers, map, currentLatitude, currentLongitude) {
-  markers.forEach(marker => {
-    const position = new naver.maps.LatLng(marker.latitude, marker.longitude);
-    const infoWindowContent = `
-      <h3>${marker.name}</h3>
-      <p>전화번호: ${marker.phoneNumber}</p>
-    `;
-    const infoWindow = new naver.maps.InfoWindow({ content: infoWindowContent });
+    function showError(error) {
+      alert("위치 정보를 가져올 수 없습니다.");
+    }
 
-    const markerObj = new naver.maps.Marker({
-      position,
-      map,
-      icon: {
-        content: `<div class="marker-icon" style="background-color: ${marker.isCurrentLocation ? 'blue' : 'red'};"></div>`,
-        size: new naver.maps.Size(24, 24),
-        anchor: new naver.maps.Point(12, 12)
-      }
-    });
+    function showCurrentLocationMarker(map, latitude, longitude) {
+      const currentLocation = new naver.maps.LatLng(latitude, longitude);
 
-    if (marker.isCurrentLocation) {
-      const currentLocationMarker = new naver.maps.Marker({
-        position,
-        map,
-        icon: {
-          content: `<div class="marker-icon" style="background-color: blue;"></div>`,
-          size: new naver.maps.Size(24, 24),
-          anchor: new naver.maps.Point(12, 12)
-        }
+      const marker = new naver.maps.Marker({
+        position: currentLocation,
+        map: map,
+        title: "현재 위치"
       });
 
-      const currentLocationInfoWindow = new naver.maps.InfoWindow({
+      const infoWindow = new naver.maps.InfoWindow({
         content: "현재 위치"
       });
 
-      naver.maps.Event.addListener(currentLocationMarker, "click", function() {
-        currentLocationInfoWindow.open(map, currentLocationMarker);
+      naver.maps.Event.addListener(marker, "click", function() {
+        infoWindow.open(map, marker);
       });
+
+      map.setCenter(currentLocation);
     }
 
-    naver.maps.Event.addListener(markerObj, "click", function() {
-      infoWindow.open(map, markerObj);
-    });
-  });
-}
+    function parseCSVData(csvData) {
+      const lines = csvData.split('\n');
+      const markers = [];
 
-function parseCSVData(csvData) {
-  const lines = csvData.split('\n');
-  const markers = [];
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line !== '') {
+          const values = line.split(',');
+          const name = values[0].trim();
+          const latitude = parseFloat(values[1]);
+          const longitude = parseFloat(values[2]);
+          const phoneNumber = values[3].trim();
 
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (line !== '') {
-      const values = line.split(',');
-      const name = values[0].trim();
-      const latitude = parseFloat(values[1]);
-      const longitude = parseFloat(values[2]);
-      const phoneNumber = values[3].trim();
-
-      if (!isNaN(latitude) && !isNaN(longitude)) {
-        markers.push({ name, latitude, longitude, phoneNumber, isCurrentLocation: false });
+          if (!isNaN(latitude) && !isNaN(longitude)) {
+            markers.push({ name, latitude, longitude, phoneNumber });
+          }
+        }
       }
-    }
-  }
 
-  return markers;
-}
+      return markers;
+    }
 
     function displayMarkers(markers, map) {
       markers.forEach(marker => {
