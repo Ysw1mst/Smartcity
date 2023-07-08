@@ -18,7 +18,7 @@
       margin-top: 20px;
     }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jU&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jUY&callback=initMap" async defer></script>
   <script>
     function initMap() {
       getLocation();
@@ -43,6 +43,9 @@
       };
       var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
+      // 현재 위치 마커 추가
+      showCurrentLocationMarker(map, latitude, longitude);
+
       // CSV 파일 로드
       fetch('./대피소.csv')
         .then(response => response.text())
@@ -55,6 +58,26 @@
 
     function showError(error) {
       alert("위치 정보를 가져올 수 없습니다.");
+    }
+
+    function showCurrentLocationMarker(map, latitude, longitude) {
+      const currentLocation = new google.maps.LatLng(latitude, longitude);
+
+      const marker = new google.maps.Marker({
+        position: currentLocation,
+        map: map,
+        title: "현재 위치"
+      });
+
+      const infoWindow = new google.maps.InfoWindow({
+        content: "현재 위치"
+      });
+
+      marker.addListener("click", function() {
+        infoWindow.open(map, marker);
+      });
+
+      map.setCenter(currentLocation);
     }
 
     function parseCSVData(csvData) {
