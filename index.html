@@ -32,74 +32,95 @@
       }
     }
 
-    function showPosition(position) {
-      var latitude = position.coords.latitude;
-      var longitude = position.coords.longitude;
+function showPosition(position) {
+  var latitude = position.coords.latitude;
+  var longitude = position.coords.longitude;
 
-      var mapOptions = {
-        center: new naver.maps.LatLng(latitude, longitude),
-        zoom: 17
-      };
-      var map = new naver.maps.Map(document.getElementById("map"), mapOptions);
+  var mapOptions = {
+    center: new naver.maps.LatLng(latitude, longitude),
+    zoom: 17
+  };
+  var map = new naver.maps.Map(document.getElementById("map"), mapOptions);
 
-      // 현재 위치 마커 추가
-      showCurrentLocationMarker(map, latitude, longitude);
+  // 현재 위치 마커 추가
+  showCurrentLocationMarker(map, latitude, longitude);
 
-      // CSV 파일 로드
-      fetch('./대피소.csv')
-        .then(response => response.text())
-        .then(data => {
-          const markers = parseCSVData(data);
-          displayMarkers(markers, map);
-        })
-        .catch(error => console.error('Error:', error));
-    }
+  // CSV 파일 로드
+  fetch('./대피소.csv')
+    .then(response => response.text())
+    .then(data => {
+      const markers = parseCSVData(data);
+      displayMarkers(markers, map, latitude, longitude);
+    })
+    .catch(error => console.error('Error:', error));
+}
 
-    function showError(error) {
-      alert("위치 정보를 가져올 수 없습니다.");
-    }
+function displayMarkers(markers, map, currentLatitude, currentLongitude) {
+  markers.forEach(marker => {
+    const position = new naver.maps.LatLng(marker.latitude, marker.longitude);
+    const infoWindowContent = `
+      <h3>${marker.name}</h3>
+      <p>전화번호: ${marker.phoneNumber}</p>
+    `;
+    const infoWindow = new naver.maps.InfoWindow({ content: infoWindowContent });
 
-    function showCurrentLocationMarker(map, latitude, longitude) {
-      const currentLocation = new naver.maps.LatLng(latitude, longitude);
+    const markerObj = new naver.maps.Marker({
+      position,
+      map,
+      icon: {
+        content: `<div class="marker-icon" style="background-color: ${marker.isCurrentLocation ? 'blue' : 'red'};"></div>`,
+        size: new naver.maps.Size(24, 24),
+        anchor: new naver.maps.Point(12, 12)
+      }
+    });
 
-      const marker = new naver.maps.Marker({
-        position: currentLocation,
-        map: map,
-        title: "현재 위치"
+    if (marker.isCurrentLocation) {
+      const currentLocationMarker = new naver.maps.Marker({
+        position,
+        map,
+        icon: {
+          content: `<div class="marker-icon" style="background-color: blue;"></div>`,
+          size: new naver.maps.Size(24, 24),
+          anchor: new naver.maps.Point(12, 12)
+        }
       });
 
-      const infoWindow = new naver.maps.InfoWindow({
+      const currentLocationInfoWindow = new naver.maps.InfoWindow({
         content: "현재 위치"
       });
 
-      naver.maps.Event.addListener(marker, "click", function() {
-        infoWindow.open(map, marker);
+      naver.maps.Event.addListener(currentLocationMarker, "click", function() {
+        currentLocationInfoWindow.open(map, currentLocationMarker);
       });
-
-      map.setCenter(currentLocation);
     }
 
-    function parseCSVData(csvData) {
-      const lines = csvData.split('\n');
-      const markers = [];
+    naver.maps.Event.addListener(markerObj, "click", function() {
+      infoWindow.open(map, markerObj);
+    });
+  });
+}
 
-      for (let i = 1; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (line !== '') {
-          const values = line.split(',');
-          const name = values[0].trim();
-          const latitude = parseFloat(values[1]);
-          const longitude = parseFloat(values[2]);
-          const phoneNumber = values[3].trim();
+function parseCSVData(csvData) {
+  const lines = csvData.split('\n');
+  const markers = [];
 
-          if (!isNaN(latitude) && !isNaN(longitude)) {
-            markers.push({ name, latitude, longitude, phoneNumber });
-          }
-        }
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (line !== '') {
+      const values = line.split(',');
+      const name = values[0].trim();
+      const latitude = parseFloat(values[1]);
+      const longitude = parseFloat(values[2]);
+      const phoneNumber = values[3].trim();
+
+      if (!isNaN(latitude) && !isNaN(longitude)) {
+        markers.push({ name, latitude, longitude, phoneNumber, isCurrentLocation: false });
       }
-
-      return markers;
     }
+  }
+
+  return markers;
+}
 
     function displayMarkers(markers, map) {
       markers.forEach(marker => {
