@@ -18,7 +18,7 @@
       margin-top: 20px;
     }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=ECdjF48z6v7766obKPoX7VAtKdtUD6QZcMutdrUB&callback=initMap" async defer></script>
+  <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6lcb5pk9bx" charset="utf-8"></script>
   <script>
     function initMap() {
       getLocation();
@@ -36,12 +36,11 @@
       var latitude = position.coords.latitude;
       var longitude = position.coords.longitude;
 
-      var latlng = new google.maps.LatLng(latitude, longitude);
       var mapOptions = {
-        center: latlng,
+        center: new naver.maps.LatLng(latitude, longitude),
         zoom: 17
       };
-      var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      var map = new naver.maps.Map(document.getElementById("map"), mapOptions);
 
       // 현재 위치 마커 추가
       showCurrentLocationMarker(map, latitude, longitude);
@@ -61,19 +60,19 @@
     }
 
     function showCurrentLocationMarker(map, latitude, longitude) {
-      const currentLocation = new google.maps.LatLng(latitude, longitude);
+      const currentLocation = new naver.maps.LatLng(latitude, longitude);
 
-      const marker = new google.maps.Marker({
+      const marker = new naver.maps.Marker({
         position: currentLocation,
         map: map,
         title: "현재 위치"
       });
 
-      const infoWindow = new google.maps.InfoWindow({
+      const infoWindow = new naver.maps.InfoWindow({
         content: "현재 위치"
       });
 
-      marker.addListener("click", function() {
+      naver.maps.Event.addListener(marker, "click", function() {
         infoWindow.open(map, marker);
       });
 
@@ -104,19 +103,19 @@
 
     function displayMarkers(markers, map) {
       markers.forEach(marker => {
-        const position = new google.maps.LatLng(marker.latitude, marker.longitude);
+        const position = new naver.maps.LatLng(marker.latitude, marker.longitude);
         const infoWindowContent = `
           <h3>${marker.name}</h3>
           <p>전화번호: ${marker.phoneNumber}</p>
         `;
-        const infoWindow = new google.maps.InfoWindow({ content: infoWindowContent });
+        const infoWindow = new naver.maps.InfoWindow({ content: infoWindowContent });
 
-        const markerObj = new google.maps.Marker({
+        const markerObj = new naver.maps.Marker({
           position,
           map
         });
 
-        markerObj.addListener('click', function() {
+        naver.maps.Event.addListener(markerObj, "click", function() {
           infoWindow.open(map, markerObj);
         });
       });
@@ -128,5 +127,9 @@
     <h1>지진 대피 시뮬레이션</h1>
     <div id="map"></div>
   </div>
+  <script>
+    // initMap 함수 호출
+    initMap();
+  </script>
 </body>
 </html>
