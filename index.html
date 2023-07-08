@@ -3,14 +3,15 @@
 <head>
   <title>지진 대피 시뮬레이션</title>
   <style>
-     display: flex;
+    #container {
+      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
       text-align: center;
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jU&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHBwMfUgWt92CYu8MDymY9iF44byal9jUY&callback=initMap" async defer></script>
   <script>
     var currentLocationMarker; // 현재 위치 마커 변수 추가
 
@@ -51,6 +52,7 @@
           const markers = parseCSVData(data);
 
           // 대피소 마커 표시
+          markers.push({ name: "현재 위치", latitude, longitude }); // 현재 위치 마커 정보 추가
           displayMarkers(markers, map);
           showAddress(latitude, longitude); // 도로명 주소 출력 함수 호출
         })
