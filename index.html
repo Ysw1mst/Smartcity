@@ -3,8 +3,7 @@
 <head>
   <title>지진 대피 시뮬레이션</title>
   <style>
-      #container {
-      display: flex;
+     display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -51,9 +50,6 @@
         .then(data => {
           const markers = parseCSVData(data);
 
-          // 기존 마커 삭제
-          clearMarkers();
-
           // 대피소 마커 표시
           displayMarkers(markers, map);
           showAddress(latitude, longitude); // 도로명 주소 출력 함수 호출
@@ -87,12 +83,6 @@
           infoWindow.open(map, markerObj);
         });
       });
-    }
-
-    function clearMarkers() {
-      if (currentLocationMarker) {
-        currentLocationMarker.setMap(null); // 현재 위치 마커 삭제
-      }
     }
 
     function showAddress(latitude, longitude) {
