@@ -131,6 +131,8 @@
     }
   </style>
   <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6lcb5pk9bx" charset="utf-8"></script>
+  <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6lcb5pk9bx&submodules=geocoder"></script>
+
   <script>
     var map; // 지도 객체
     var markers = []; // 대피소 마커 배열
@@ -171,8 +173,24 @@ function showPosition(position) {
     })
     .catch(error => console.error('Error:', error));
 
-  // 현재위치 출력
-  document.getElementById("currentLocation").textContent = `사용자님의 현재위치는 (${latitude}, ${longitude}) 입니다.`;
+  // 현재 위치 좌표를 주소로 변환
+  naver.maps.Service.reverseGeocode({
+    location: new naver.maps.LatLng(latitude, longitude),
+    coordType: naver.maps.Service.CoordType.LATLNG
+  }, function (status, response) {
+    if (status === naver.maps.Service.Status.ERROR) {
+      alert('주소 변환 실패');
+      return;
+    }
+    if (response.v2.meta.totalCount === 0) {
+      alert('주소를 찾을 수 없습니다.');
+      return;
+    }
+
+    var currentAddress = response.v2.addresses[0].roadAddress;
+    // 현재 위치 주소 출력
+    document.getElementById("currentAddress").textContent = currentAddress;
+  });
 
   // 가장 가까운 대피소 찾기
   const nearestShelter = findNextNearestShelterFromMarkers(latitude, longitude);
@@ -180,10 +198,11 @@ function showPosition(position) {
   // 가장 가까운 대피소 출력
   document.getElementById("nearestShelter").textContent = nearestShelter ? nearestShelter.name : "대피소를 찾을 수 없습니다.";
 
-  // 현재위치와 가장 가까운 대피소 이름 출력
+  // 현재 위치와 가장 가까운 대피소 이름 출력
   showCurrentLocationText(latitude, longitude);
   showNearestShelterText(nearestShelter ? nearestShelter.name : "대피소를 찾을 수 없습니다.");
 }
+
 
 function showCurrentLocationText(latitude, longitude) {
   const currentLocationText = document.getElementById("currentLocationText");
