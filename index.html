@@ -4,6 +4,73 @@
   <meta charset="UTF-8">
   <title>지진 대피 시뮬레이션1</title>
   <style>
+    nav{
+    	font-size: 12pt;
+    	font-family: 'PT Sans', Arial, Sans-serif;
+    	position: relative;
+    }
+    nav ul{
+    	padding: 0;
+    	margin: 0 auto;
+    	width: auto;
+    }
+    nav li{
+    }
+    nav a{
+    	line-height: 50px;
+      height: 50px;
+    }
+    nav li a{
+    	box-sizing: border-box;
+    	-moz-box-sizing: border-box;
+    	-webkit-box-sizing: border-box;
+    }
+    nav li:last-child a{
+    	border-right: 0;
+        }
+    nav a:hover, nav a:active{
+    }
+    nav a#pull{
+    	display: none;
+    }
+      html {
+      -webkit-touch-callout:none;
+      -webkit-user-select:none;
+      -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+      }
+
+      ul{
+        /*list-style-type: none;*/
+        margin: 0;
+        padding: 0;
+        background-color: #333;
+        text-align: center;
+      }
+      li{
+        /*position: relative;*/
+        display: inline-block;
+      }
+      li a{
+        color: #FFFFFF;
+        text-align: center;
+        padding: 14.5px 16px;
+        text-decoration: none;
+      }
+      li a:hover{
+        /*color: #597812;*/
+        color: #FFD400;
+        font-weight:normal;
+      }
+      .menu {
+       width: 5000px;
+       height: 50px;
+       text-align: center;
+       max-width: 100%;
+       background-position: center;
+       background-size: cover;
+       background-color: #333333;color: white;
+       position: absolute;z-index: 1;
+     }
     .button-container {
       display: flex;
       justify-content: center;
@@ -305,8 +372,23 @@
   </script>
 </head>
 <body>
+<body topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" style="background-color:#F6F6F6">
+    <div class="menu" >
+      <nav class="clearfix">
+        <ul class="clearfix">
+          <li><a href="https://ysw1mst.github.io/Smartcity/">메인</a></li> <!--""<-여기 부분에 URL 작성하면 됨-->
+          <li><a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do">지진 정보</a></li>
+          <li><a href="https://www.safekorea.go.kr/idsiSFK/neo/sfk/cs/sfc/res/victimList.jsp?acmdfclty_cd=2&emgPage=Y&menuSeq=855">지진 대피 장소</a></li>
+          <li><a href="https://www.sejong.go.kr/index.jsp">세종시</a></li>
+          <li><a href="https://www.youtube.com/watch?v=S9TZ4vsQiD4&ab_channel=MBCNEWSt">뉴스</a></li>
+      </ul>
+      <a id="pull" href="#"></a>
+    </nav>
+    </div>
+  </body>
   <div id="container">
-    <h2>대피소 안내 페이지</h2>
+    <h2>           </h2>
+<h2> [스마트시티] 대피소 안내 페이지          </h2>
     <div class="map-container">
       <div id="map"></div>
     </div>
@@ -326,7 +408,7 @@
       </div>
     </div>
 <div class="button-container">
-  <button onclick="findNextNearestShelter()">[가까운 대피소 찾기]</button>
+  <button onclick="findNextNearestShelter()">가까운 대피소 찾기</button>
   <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
   <a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank" class="quake-info-button">지진 정보 확인</a>
 </div>
