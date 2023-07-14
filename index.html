@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>지진 대피 시뮬레이션</title>
+  <title>지진 대피 시뮬레이션1</title>
   <style>
 #container {
   display: flex;
@@ -49,12 +49,20 @@
       margin-top: 20px;
     }
 
-    .button-container button {
-      margin: 0 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-    }
+.button-container button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50; /* 배경색 */
+  color: white; /* 글자색 */
+  border: none; /* 테두리 제거 */
+  border-radius: 5px; /* 둥근 테두리 */
+  cursor: pointer;
+}
 
+.button-container button:hover {
+  background-color: #45a049; /* 마우스 호버 시 배경색 변경 */
+}
 .manuals-column {
   border: 3px solid #000000;
   padding: 10px;
@@ -301,18 +309,17 @@
         <h3>[실내]가스와 전기를 차단하세요!</h3>
         <h3>[실내]문을 열어 출구를 확보하세요!</h3>
         <h3>[실내]엘리베이터 탑승금지, 계단을 이용하세요.</h3>
- 
       </div>
-       <div class="button-container">
-          <button onclick="findNextNearestShelter()">[가까운 대피소 찾기]</button>
-          <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
-        </div>
       <div class="manuals-column">
         <h3>실외 대피요령</h3>
         <h3>[실외]주변 높은 건물이 없는곳으로 이동하세요 [대피소 찾기 버튼 이용]</h3>
         <h3>[실외]자동차 이용시 비상등을켜고 오른쪽에 차를 새운후 키를 넣어두고 대피소로 이동하세요.</h3>
         <h3>[실외]지하철, 기차 이용시 손잡이나 기둥을 꽉잡고 넘어지지않도록 하세요. 이후 안내방송에 따라 질서있게 이동하세요.</h3>
       </div>
+    </div>
+    <div class="button-container">
+      <button onclick="findNextNearestShelter()">[가까운 대피소 찾기]</button>
+      <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
     </div>
   </div>
   <script>
