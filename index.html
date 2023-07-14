@@ -149,28 +149,52 @@
       }
     }
 
-    function showPosition(position) {
-      var latitude = position.coords.latitude;
-      var longitude = position.coords.longitude;
+function showPosition(position) {
+  var latitude = position.coords.latitude;
+  var longitude = position.coords.longitude;
 
-      var mapOptions = {
-        center: new naver.maps.LatLng(latitude, longitude),
-        zoom: 17
-      };
-      map = new naver.maps.Map(document.getElementById("map"), mapOptions);
+  var mapOptions = {
+    center: new naver.maps.LatLng(latitude, longitude),
+    zoom: 17
+  };
+  map = new naver.maps.Map(document.getElementById("map"), mapOptions);
 
-      // 현재 위치 마커 추가
-      showCurrentLocationMarker(latitude, longitude);
+  // 현재 위치 마커 추가
+  showCurrentLocationMarker(latitude, longitude);
 
-      // CSV 파일 로드
-      fetch('./대피소.csv')
-        .then(response => response.text())
-        .then(data => {
-          markers = parseCSVData(data);
-          displayMarkers(markers);
-        })
-        .catch(error => console.error('Error:', error));
-    }
+  // CSV 파일 로드
+  fetch('./대피소.csv')
+    .then(response => response.text())
+    .then(data => {
+      markers = parseCSVData(data);
+      displayMarkers(markers);
+    })
+    .catch(error => console.error('Error:', error));
+
+  // 현재위치 출력
+  document.getElementById("currentLocation").textContent = `사용자님의 현재위치는 (${latitude}, ${longitude}) 입니다.`;
+
+  // 가장 가까운 대피소 찾기
+  const nearestShelter = findNextNearestShelterFromMarkers(latitude, longitude);
+
+  // 가장 가까운 대피소 출력
+  document.getElementById("nearestShelter").textContent = nearestShelter ? nearestShelter.name : "대피소를 찾을 수 없습니다.";
+
+  // 현재위치와 가장 가까운 대피소 이름 출력
+  showCurrentLocationText(latitude, longitude);
+  showNearestShelterText(nearestShelter ? nearestShelter.name : "대피소를 찾을 수 없습니다.");
+}
+
+function showCurrentLocationText(latitude, longitude) {
+  const currentLocationText = document.getElementById("currentLocationText");
+  currentLocationText.innerHTML = `사용자님의 현재 위치는 (${latitude.toFixed(6)}, ${longitude.toFixed(6)}) 입니다.`;
+}
+
+function showNearestShelterText(nearestShelterName) {
+  const nearestShelterText = document.getElementById("nearestShelterText");
+  nearestShelterText.innerHTML = `가장 가까운 대피소는 <strong>${nearestShelterName}</strong> 입니다.`;
+}
+
 
     function showError(error) {
       alert("위치 정보를 가져올 수 없습니다.");
