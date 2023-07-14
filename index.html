@@ -27,122 +27,108 @@
     }
     nav li:last-child a{
     	border-right: 0;
-        }
+    }
     nav a:hover, nav a:active{
     }
     nav a#pull{
     	display: none;
     }
-      html {
-      -webkit-touch-callout:none;
-      -webkit-user-select:none;
-      -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
-      }
-
-      ul{
-        /*list-style-type: none;*/
-        margin: 0;
-        padding: 0;
-        background-color: #333;
-        text-align: center;
-      }
-      li{
-        /*position: relative;*/
-        display: inline-block;
-      }
-      li a{
-        color: #FFFFFF;
-        text-align: center;
-        padding: 14.5px 16px;
-        text-decoration: none;
-      }
-      li a:hover{
-        /*color: #597812;*/
-        color: #FFD400;
-        font-weight:normal;
-      }
-      .menu {
-       width: 5000px;
-       height: 50px;
-       text-align: center;
-       max-width: 100%;
-       background-position: center;
-       background-size: cover;
-       background-color: #333333;color: white;
-       position: absolute;z-index: 1;
-     }
+    html {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      background-color: #333;
+      text-align: center;
+    }
+    li {
+      display: inline-block;
+    }
+    li a {
+      color: #FFFFFF;
+      text-align: center;
+      padding: 14.5px 16px;
+      text-decoration: none;
+    }
+    li a:hover {
+      color: #FFD400;
+      font-weight: normal;
+    }
+    .menu {
+      width: 5000px;
+      height: 50px;
+      text-align: center;
+      max-width: 100%;
+      background-position: center;
+      background-size: cover;
+      background-color: #333333;
+      color: white;
+      position: absolute;
+      z-index: 1;
+    }
     .button-container {
       display: flex;
       justify-content: center;
       margin-top: 20px;
-      gap: 10px; /* 버튼 사이의 여백 추가 */
+      gap: 10px;
     }
-
-#container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100vh;
-  text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.map-container {
-  width: 100%;
-  margin-top: 20px;
-}
-
-#map {
-  height: 600px;
-  width: 100%;
-}
-
-.manuals {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
-  margin-top: 20px;
-}
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .map-container {
+      width: 100%;
+      margin-top: 20px;
+    }
+    #map {
+      height: 600px;
+      width: 100%;
+    }
+    .manuals {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-top: 20px;
+    }
     .manuals-column {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-
     .manuals-column h2 {
       margin-top: 0;
     }
-
-    .button-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
+    .button-container button,
+    .button-container a {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
     }
-
-.button-container button, .button-container a {
-  margin-top: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none; /* 링크의 밑줄 제거 */
-}
-
-.button-container button:hover, .button-container a:hover {
-  background-color: #45a049;
-}
-.manuals-column {
-  border: 3px solid #000000;
-  padding: 10px;
-  /* 외곽선 색상 및 패딩을 원하는 값으로 수정하세요 */
-}
+    .button-container button:hover,
+    .button-container a:hover {
+      background-color: #45a049;
+    }
+    .manuals-column {
+      border: 3px solid #000000;
+      padding: 10px;
+    }
   </style>
   <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6lcb5pk9bx" charset="utf-8"></script>
   <script>
@@ -204,7 +190,7 @@
         content: infoWindowContent
       });
 
-      naver.maps.Event.addListener(currentLocationMarker, "click", function() {
+      naver.maps.Event.addListener(currentLocationMarker, "click", function () {
         currentLocationInfoWindow.open(map, currentLocationMarker);
       });
 
@@ -247,7 +233,7 @@
           map
         });
 
-        naver.maps.Event.addListener(markerObj, "click", function() {
+        naver.maps.Event.addListener(markerObj, "click", function () {
           infoWindow.open(map, markerObj);
         });
       });
@@ -255,7 +241,7 @@
 
     function findNextNearestShelter() {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
           const currentLatitude = position.coords.latitude;
           const currentLongitude = position.coords.longitude;
 
@@ -292,7 +278,7 @@
               map: map
             });
 
-            naver.maps.Event.addListener(marker, "click", function() {
+            naver.maps.Event.addListener(marker, "click", function () {
               infoWindow.open(map, marker);
             });
 
@@ -344,7 +330,7 @@
 
     function moveToCurrentLocation() {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
           const currentLatitude = position.coords.latitude;
           const currentLongitude = position.coords.longitude;
 
@@ -388,7 +374,11 @@
   </body>
   <div id="container">
     <h2>           </h2>
-<h2> [스마트시티] 대피소 안내 페이지          </h2>
+<h2>[스마트시티] 대피소 안내 페이지</h2>
+<p id="currentLocation">사용자님의 현재위치는 <span id="currentAddress"></span> 입니다.</p>
+<p>사용자님의 현재 위치에서 가장 가까운 지진 대피소는 <span id="nearestShelter"></span> 입니다.</p>
+
+
     <div class="map-container">
       <div id="map"></div>
     </div>
@@ -407,15 +397,26 @@
         <h3>[실외]지하철, 기차 이용시 손잡이나 기둥을 꽉잡고 넘어지지않도록 하세요. 이후 안내방송에 따라 질서있게 이동하세요.</h3>
       </div>
     </div>
-<div class="button-container">
-  <button onclick="findNextNearestShelter()">가까운 대피소 찾기</button>
-  <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
-  <a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank" class="quake-info-button">지진 정보 확인</a>
-</div>
-
+    <div class="button-container">
+      <button onclick="findNextNearestShelter()">가까운 대피소 찾기</button>
+      <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
+      <a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank" class="quake-info-button">지진 정보 확인</a>
+    </div>
+    <div id="currentLocationText"></div>
+    <div id="nearestShelterText"></div>
   </div>
   <script>
     initMap();
+
+    function showCurrentLocationText(latitude, longitude) {
+      const currentLocationText = document.getElementById("currentLocationText");
+      currentLocationText.innerHTML = `현재위치: 위도 ${latitude.toFixed(6)}, 경도 ${longitude.toFixed(6)}`;
+    }
+
+    function showNearestShelterText(nearestShelterName) {
+      const nearestShelterText = document.getElementById("nearestShelterText");
+      nearestShelterText.innerHTML = `가장 가까운 대피소는 <strong>${nearestShelterName}</strong> 입니다.`;
+    }
   </script>
 </body>
 </html>
