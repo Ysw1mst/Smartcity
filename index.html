@@ -502,36 +502,22 @@ function showNearestShelterText(nearestShelterName) {
       moveSlider();
     }
   
-    // 이미지를 이전으로 이동시키는 함수
+ 
     function prevImage() {
       currentIndex = (currentIndex - 1 + sliderImages.children.length) % sliderImages.children.length;
       moveSlider();
     }
   
-    // 이미지를 이동시키는 함수
+
     function moveSlider() {
       const imageWidth = sliderImages.children[0].offsetWidth;
       const translateValue = -currentIndex * imageWidth;
       sliderImages.style.transition = "transform 1s ease";
       sliderImages.style.transform = `translateX(${translateValue}px)`;
-  
-      // 무한 루프 처리
-      if (currentIndex === 0) {
-        // 슬라이드가 첫 번째 이미지로 이동하면, transition을 none으로 설정하여 순간 이동하도록 합니다.
-        setTimeout(() => {
-          sliderImages.style.transition = "none";
-          sliderImages.style.transform = `translateX(${sliderImages.children.length * -imageWidth}px)`;
-          currentIndex = sliderImages.children.length - 1;
-        }, 1000);
-      } else if (currentIndex === sliderImages.children.length - 1) {
-        // 슬라이드가 마지막 이미지로 이동하면, transition을 none으로 설정하여 순간 이동하도록 합니다.
-        setTimeout(() => {
-          sliderImages.style.transition = "none";
-          sliderImages.style.transform = `translateX(${-imageWidth}px)`;
-          currentIndex = 0;
-        }, 1000);
-      }
     }
+  
+    startAutoSlider();
+    
     initMap();
 
     function showCurrentLocationText(latitude, longitude) {
@@ -543,7 +529,6 @@ function showNearestShelterText(nearestShelterName) {
       const nearestShelterText = document.getElementById("nearestShelterText");
       nearestShelterText.innerHTML = `가장 가까운 대피소는 <strong>${nearestShelterName}</strong> 입니다.`;
     }
-    startAutoSlider();
   </script>
   
 </body>
