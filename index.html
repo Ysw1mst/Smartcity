@@ -90,7 +90,7 @@
       margin-top: 20px;
     }
     #map {
-      height: 500px;
+      height: 600px;
       width: 100%;
     }
     .manuals {
@@ -133,7 +133,7 @@
     .image-slider {
       overflow: hidden;
       width: 700px;
-      height: 800px;
+      height: 500px;
       margin: 20px auto;
       position: relative;
     }
@@ -480,7 +480,7 @@ function showNearestShelterText(nearestShelterName) {
       <a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank" class="quake-info-button">지진 정보 확인</a>
       </div>
       <div class="image-slider">
-        <div class="image-slider" style="width: 700px; height: 800px;">
+        <div class="image-slider" style="width: px; height: 800px;">
         <div class="slider-images">
           <img src="이미지1.jpg" alt="이미지1" class="slider-image">
           <img src="이미지2.jpg" alt="이미지2" class="slider-image">
@@ -497,25 +497,34 @@ function showNearestShelterText(nearestShelterName) {
     let currentIndex = 0;
     const intervalDuration = 3000; // 이미지 변경 간격(ms) 설정
 
+    // 이미지를 다음으로 이동시키는 함수
     function nextImage() {
       currentIndex = (currentIndex + 1) % sliderImages.children.length;
       moveSlider();
     }
-  
- 
+
+    // 이미지를 이전으로 이동시키는 함수
     function prevImage() {
       currentIndex = (currentIndex - 1 + sliderImages.children.length) % sliderImages.children.length;
       moveSlider();
     }
-  
 
+    // 이미지를 이동시키는 함수
     function moveSlider() {
       const imageWidth = sliderImages.children[0].offsetWidth;
       const translateValue = -currentIndex * imageWidth;
       sliderImages.style.transition = "transform 1s ease";
       sliderImages.style.transform = `translateX(${translateValue}px)`;
     }
-  
+
+    // 이미지 슬라이더를 자동으로 이동시키는 함수
+    function startAutoSlider() {
+      setInterval(() => {
+        nextImage();
+      }, intervalDuration);
+    }
+
+    // 이미지 슬라이더 시작
     startAutoSlider();
     
     initMap();
