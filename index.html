@@ -520,15 +520,16 @@ function showNearestShelterText(nearestShelterName) {
         // 슬라이드가 첫 번째 이미지로 이동하면, transition을 none으로 설정하여 순간 이동하도록 합니다.
         setTimeout(() => {
           sliderImages.style.transition = "none";
-          sliderImages.style.transform = `translateX(0)`;
+          sliderImages.style.transform = `translateX(${sliderImages.children.length * -imageWidth}px)`;
+          currentIndex = sliderImages.children.length - 1;
         }, 1000);
       } else if (currentIndex === sliderImages.children.length - 1) {
         // 슬라이드가 마지막 이미지로 이동하면, transition을 none으로 설정하여 순간 이동하도록 합니다.
         setTimeout(() => {
           sliderImages.style.transition = "none";
-          sliderImages.style.transform = `translateX(${-currentIndex * imageWidth}px)`;
+          sliderImages.style.transform = `translateX(${-imageWidth}px)`;
+          currentIndex = 0;
         }, 1000);
-        startAutoSlider();
       }
     }
     initMap();
@@ -542,6 +543,7 @@ function showNearestShelterText(nearestShelterName) {
       const nearestShelterText = document.getElementById("nearestShelterText");
       nearestShelterText.innerHTML = `가장 가까운 대피소는 <strong>${nearestShelterName}</strong> 입니다.`;
     }
+    startAutoSlider();
   </script>
   
 </body>
