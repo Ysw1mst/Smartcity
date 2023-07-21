@@ -129,6 +129,50 @@
       border: 3px solid #000000;
       padding: 10px;
     }
+
+    .image-slider {
+      overflow: hidden;
+      width: 300px;
+      height: 200px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .slider-images {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 1s ease;
+    }
+
+    .slider-image {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 추가한 이미지 슬라이더 버튼 스타일 설정 */
+    .slider-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30px;
+      height: 30px;
+      background-color: #4CAF50;
+      color: #fff;
+      text-align: center;
+      line-height: 30px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .slider-button.prev {
+      left: 0;
+    }
+
+    .slider-button.next {
+      right: 0;
+    }
   </style>
   <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6lcb5pk9bx" charset="utf-8"></script>
   <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6lcb5pk9bx&submodules=geocoder"></script>
@@ -419,7 +463,7 @@ function showNearestShelterText(nearestShelterName) {
   
   <div id="container">
     <h2></h2>
-    <h2 style="color: #FFFFFF;">[스마트시티] 세종지역 대피소 지도</h2>
+    <h2>[스마트시티]세종지역 대피소 지도</h2>
 
     <div class="map-container">
 
@@ -434,6 +478,21 @@ function showNearestShelterText(nearestShelterName) {
       <button onclick="findNextNearestShelter()">가까운 대피소 찾기</button>
       <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
       <a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank" class="quake-info-button">지진 정보 확인</a>
+      <div class="image-slider">
+        <div class="slider-images">
+          <img src="이미지1.jpg" alt="이미지1" class="slider-image">
+          <img src="이미지2.jpg" alt="이미지2" class="slider-image">
+          <img src="이미지3.jpg" alt="이미지3" class="slider-image">
+          <img src="이미지4.jpg" alt="이미지4" class="slider-image">
+          <img src="이미지5.jpg" alt="이미지5" class="slider-image">
+          <img src="이미지6.jpg" alt="이미지6" class="slider-image">
+          <img src="이미지7.jpg" alt="이미지7" class="slider-image">
+          <img src="이미지8.jpg" alt="이미지8" class="slider-image">
+        </div>
+        <div class="slider-button prev" onclick="prevImage()">◀</div>
+        <div class="slider-button next" onclick="nextImage()">▶</div>
+      </div>
+    </div>
   <script>
     
     initMap();
