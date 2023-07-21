@@ -489,11 +489,42 @@ function showNearestShelterText(nearestShelterName) {
           <img src="이미지6.jpg" alt="이미지6" class="slider-image">
           <img src="이미지7.jpg" alt="이미지7" class="slider-image">
           <img src="이미지8.jpg" alt="이미지8" class="slider-image">
-        </div>
-        <div class="slider-button prev" onclick="prevImage()">◀</div>
-        <div class="slider-button next" onclick="nextImage()">▶</div>
-      </div>
+ 
   <script>
+
+    const sliderImages = document.querySelector(".slider-images");
+    let currentIndex = 0;
+    const intervalDuration = 3000; // 이미지 변경 간격(ms) 설정
+
+    // 이미지를 다음으로 이동시키는 함수
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % sliderImages.children.length;
+      moveSlider();
+    }
+
+    // 이미지를 이전으로 이동시키는 함수
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + sliderImages.children.length) % sliderImages.children.length;
+      moveSlider();
+    }
+
+    // 이미지를 이동시키는 함수
+    function moveSlider() {
+      const imageWidth = sliderImages.children[0].offsetWidth;
+      const translateValue = -currentIndex * imageWidth;
+      sliderImages.style.transition = "transform 1s ease";
+      sliderImages.style.transform = `translateX(${translateValue}px)`;
+    }
+
+    // 이미지 슬라이더를 자동으로 이동시키는 함수
+    function startAutoSlider() {
+      setInterval(() => {
+        nextImage();
+      }, intervalDuration);
+    }
+
+    // 이미지 슬라이더 시작
+    startAutoSlider();
     
     initMap();
 
