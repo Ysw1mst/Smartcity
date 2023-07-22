@@ -574,17 +574,23 @@ function showNearestShelterText(nearestShelterName) {
     <span>내위치로 이동</span>
     <div class="dot"></div>
   </div>
-</div>
 
-<!-- 내 위치로 이동 버튼을 이미지로 원형으로 변경 (크기: 200x200) -->
-<button onclick="moveToCurrentLocation()" style="background: url('내위치버튼.png') no-repeat; width: 130px; height: 130px; border: none; border-radius: 50%;"></button>
 
-<!-- 지진 정보 확인 버튼을 이미지로 원형으로 변경 (크기: 200x200) -->
-<a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank">
-  <img src="지진정보버튼.png" alt="지진 정보 확인" style="width: 130px; height: 130px; border-radius: 50%;">
-</a>
 
-  </div> 
+  <!-- 가까운 대피소로 이동하는 버튼 -->
+  <div class="btn" onclick="findNextNearestShelter()">
+    <span>가까운 대피소 찾기</span>
+    <div class="dot"></div>
+  </div>
+
+
+
+  <!-- 지진 정보 확인 버튼 -->
+  <div class="btn" onclick="checkEarthquakeInfo()">
+    <span>지진 정보 확인</span>
+    <div class="dot"></div>
+  </div>
+</div> 
     </div>
     <!-- 아래의 <div> 태그를 추가하여 가장 가까운 대피소 정보를 출력할 공간을 만듭니다. -->
     <div id="nearestShelterInfo"></div>
