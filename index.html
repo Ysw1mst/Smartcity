@@ -6,6 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>[스마트시티] 세이프티 넘버원</title>
   <style>
+
+    @media screen and (max-width: 600px) {
+        .menu ul {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: #333;
+          font-size: 14px; /* 드롭다운 메뉴의 글꼴 크기 조정 */
+        }
+  
+        .menu ul li {
+          display: block;
+          margin-right: 0;
+        }
+  
+        .menu ul li a {
+          padding: 8px; /* 드롭다운 메뉴 항목들의 패딩 조정 */
+          line-height: 1.5;
+        }
+  
+        .menu ul li a:hover {
+          background-color: #555;
+        }
+  
+        .menu ul.show {
+          display: block;
+        }
+      }
     body {
       background-color: #6E6E6E;
       margin: 0;
@@ -390,7 +420,10 @@
         
         // 네이버 지도 API 로드 시 initMap 함수 호출
         naver.maps.onJSContentLoaded = initMap;
-        
+        function toggleDropdownMenu() {
+            var dropdownMenu = document.querySelector(".menu ul");
+            dropdownMenu.classList.toggle("show");
+          }
     </script>
   </body>
 
