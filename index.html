@@ -143,175 +143,199 @@
       80% {transform: translateX(0) rotate(180deg);}
       100% {transform: translateX(0) rotate(360deg);}
     }
+
+    /* Responsive CSS */
+    @media screen and (max-width: 768px) {
+      .menu ul li {
+        display: block;
+        margin-bottom: 10px;
+      }
+      .menu ul li a {
+        padding: 10px;
+      }
+      img {
+        max-width: 100%;
+      }
+      .button-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .btn {
+        margin: 10px 0;
+      }
+      .slideshow-container {
+        max-width: 100%;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div class="menu">
-    <nav class="clearfix">
-      <ul class="clearfix">
-        <li><a href="https://ysw1mst.github.io/Smartcity/">메인</a></li>
-        <li><a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do">지진 정보</a></li>
-        <li><a href="https://www.safekorea.go.kr/idsiSFK/neo/sfk/cs/sfc/res/victimList.jsp?acmdfclty_cd=2&emgPage=Y&menuSeq=855">지진 대피 장소</a></li>
-        <li><a href="https://www.sejong.go.kr/index.jsp">세종시</a></li>
-        <li><a href="https://www.youtube.com/watch?v=S9TZ4vsQiD4&ab_channel=MBCNEWSt">뉴스</a></li>
-      </ul>
-      <a id="pull" href="#"></a>
-    </nav>
-    <img src="상단배너.png" alt="이미지">
-  </div>
-
-  <!-- 네이버 지도를 표시할 영역 -->
-  <div id="map" style="width: 100%; height: 400px;"></div>
-
-  <!-- 버튼을 담을 컨테이너 추가 -->
-  <div class="button-container">
-    <div class="btn">
-      <span>내 위치로 이동</span>
-      <div class="dot"></div>
+    <div class="menu">
+      <nav class="clearfix">
+        <ul class="clearfix">
+          <li><a href="https://ysw1mst.github.io/Smartcity/">메인</a></li>
+          <li><a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do">지진 정보</a></li>
+          <li><a href="https://www.safekorea.go.kr/idsiSFK/neo/sfk/cs/sfc/res/victimList.jsp?acmdfclty_cd=2&emgPage=Y&menuSeq=855">지진 대피 장소</a></li>
+          <li><a href="https://www.sejong.go.kr/index.jsp">세종시</a></li>
+          <li><a href="https://www.youtube.com/watch?v=S9TZ4vsQiD4&ab_channel=MBCNEWSt">뉴스</a></li>
+        </ul>
+        <a id="pull" href="#"></a>
+      </nav>
+      <img src="상단배너.png" alt="이미지">
     </div>
-    <div class="btn">
-      <span>가장 가까운 대피소</span>
-      <div class="dot"></div>
-    </div>
-    <div class="btn">
-      <span>지진 발생 장소</span>
-      <div class="dot"></div>
-    </div>
-    <div class="btn">
-      <span>지진 정보</span>
-      <div class="dot"></div>
-    </div>
-  </div>
-
-  <!-- 이미지 슬라이드 컨테이너 추가 -->
-  <div class="slideshow-container">
-    <img class="slide-image" src="이미지1.jpg" alt="이미지 1">
-    <img class="slide-image" src="이미지2.jpg" alt="이미지 2">
-    <img class="slide-image" src="이미지3.jpg" alt="이미지 3">
-    <img class="slide-image" src="이미지4.jpg" alt="이미지 4">
-    <img class="slide-image" src="이미지5.jpg" alt="이미지 5">
-    <img class="slide-image" src="이미지6.jpg" alt="이미지 6">
-    <img class="slide-image" src="이미지7.jpg" alt="이미지 7">
-    <img class="slide-image" src="이미지8.jpg" alt="이미지 8">
   
-    <!-- 이전/다음 버튼 -->
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-  </div>
-
-  <!-- 이미지 슬라이드 닷(점) 컨테이너 추가 -->
-  <div class="dot-container">
-    <span class="dot" onclick="currentSlide(1)"></span>
-    <span class="dot" onclick="currentSlide(2)"></span>
-    <span class="dot" onclick="currentSlide(3)"></span>
-    <span class="dot" onclick="currentSlide(4)"></span>
-    <span class="dot" onclick="currentSlide(5)"></span>
-    <span class="dot" onclick="currentSlide(6)"></span>
-    <span class="dot" onclick="currentSlide(7)"></span>
-    <span class="dot" onclick="currentSlide(8)"></span>
-  </div>
-
-  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6lcb5pk9bx"></script>
-  <script>
-    var mapOptions = {
-      center: new naver.maps.LatLng(37.5666103, 126.9783882),
-      zoom: 13, 
-    };
-
-    var map = new naver.maps.Map('map', mapOptions); 
-
-    // 이미지 슬라이드 자바스크립트 코드
-    var slideIndex = 1;
-    showSlides(slideIndex);
-
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-    }
-
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("slide-image");
-        var dots = document.getElementsByClassName("dot");
-      
-        if (n > slides.length) {
-          slideIndex = 1; // 이미지가 마지막 이미지를 넘어가면 다시 첫 번째 이미지로 설정
-        }
-        if (n < 1) {
-          slideIndex = slides.length;
-        }
-      
-        for (i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";
-        }
-      
-        for (i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active", "");
-        }
-      
-        slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
-      }
-      
-      // 이미지 슬라이드 자동 변경 함수
-      function autoSlide() {
-        plusSlides(1);
-      }
-      
-      // 4초마다 autoSlide 함수 호출
-      setInterval(autoSlide, 4000);
-      
-      // 처음에 첫 번째 이미지 표시
+    <!-- 네이버 지도를 표시할 영역 -->
+    <div id="map" style="width: 100%; height: 400px;"></div>
+  
+    <!-- 버튼을 담을 컨테이너 추가 -->
+    <div class="button-container">
+      <div class="btn">
+        <span>내 위치로 이동</span>
+        <div class="dot"></div>
+      </div>
+      <div class="btn">
+        <span>가장 가까운 대피소</span>
+        <div class="dot"></div>
+      </div>
+      <div class="btn">
+        <span>지진 발생 장소</span>
+        <div class="dot"></div>
+      </div>
+      <div class="btn">
+        <span>지진 정보</span>
+        <div class="dot"></div>
+      </div>
+    </div>
+  
+    <!-- 이미지 슬라이드 컨테이너 추가 -->
+    <div class="slideshow-container">
+      <img class="slide-image" src="이미지1.jpg" alt="이미지 1">
+      <img class="slide-image" src="이미지2.jpg" alt="이미지 2">
+      <img class="slide-image" src="이미지3.jpg" alt="이미지 3">
+      <img class="slide-image" src="이미지4.jpg" alt="이미지 4">
+      <img class="slide-image" src="이미지5.jpg" alt="이미지 5">
+      <img class="slide-image" src="이미지6.jpg" alt="이미지 6">
+      <img class="slide-image" src="이미지7.jpg" alt="이미지 7">
+      <img class="slide-image" src="이미지8.jpg" alt="이미지 8">
+    
+      <!-- 이전/다음 버튼 -->
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+  
+    <!-- 이미지 슬라이드 닷(점) 컨테이너 추가 -->
+    <div class="dot-container">
+      <span class="dot" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+      <span class="dot" onclick="currentSlide(4)"></span>
+      <span class="dot" onclick="currentSlide(5)"></span>
+      <span class="dot" onclick="currentSlide(6)"></span>
+      <span class="dot" onclick="currentSlide(7)"></span>
+      <span class="dot" onclick="currentSlide(8)"></span>
+    </div>
+  
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6lcb5pk9bx"></script>
+    <script>
+      var mapOptions = {
+        center: new naver.maps.LatLng(37.5666103, 126.9783882),
+        zoom: 13, 
+      };
+  
+      var map = new naver.maps.Map('map', mapOptions); 
+  
+      // 이미지 슬라이드 자바스크립트 코드
+      var slideIndex = 1;
       showSlides(slideIndex);
-
-      function initMap() {
-        // 지도 초기화 설정
-        var mapOptions = {
-          center: new naver.maps.LatLng(37.5666103, 126.9783882), // 기본 위치 설정 (서울시청)
-          zoom: 13,
-        };
-      
-        // 지도 생성
-        var map = new naver.maps.Map('map', mapOptions);
-      
-        // 내 위치로 이동 버튼 클릭 시 동작
-        var myLocationBtn = document.getElementById('my-location-btn');
-        myLocationBtn.addEventListener('click', function () {
-          // 내 위치 정보를 받아옵니다.
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-              var lat = position.coords.latitude;
-              var lng = position.coords.longitude;
-      
-              // 받아온 위치로 지도의 중심을 이동시킵니다.
-              var myLocation = new naver.maps.LatLng(lat, lng);
-              map.setCenter(myLocation);
-      
-              // 기존에 있는 마커 제거
-              if (map.myLocationMarker) {
-                map.myLocationMarker.setMap(null);
-              }
-      
-              // 새로운 마커 추가
-              map.myLocationMarker = new naver.maps.Marker({
-                position: myLocation,
-                map: map,
-              });
-            });
-          } else {
-            alert('내 위치 정보를 지원하지 않는 브라우저입니다.');
-          }
-        });
+  
+      function plusSlides(n) {
+        showSlides(slideIndex += n);
       }
-      
-      // 네이버 지도 API 로드 시 initMap 함수 호출
-      naver.maps.onJSContentLoaded = initMap;
-      
-  </script>
-</body>
+  
+      function currentSlide(n) {
+        showSlides(slideIndex = n);
+      }
+  
+      function showSlides(n) {
+          var i;
+          var slides = document.getElementsByClassName("slide-image");
+          var dots = document.getElementsByClassName("dot");
+        
+          if (n > slides.length) {
+            slideIndex = 1; // 이미지가 마지막 이미지를 넘어가면 다시 첫 번째 이미지로 설정
+          }
+          if (n < 1) {
+            slideIndex = slides.length;
+          }
+        
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+          }
+        
+          for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+          }
+        
+          slides[slideIndex - 1].style.display = "block";
+          dots[slideIndex - 1].className += " active";
+        }
+        
+        // 이미지 슬라이드 자동 변경 함수
+        function autoSlide() {
+          plusSlides(1);
+        }
+        
+        // 4초마다 autoSlide 함수 호출
+        setInterval(autoSlide, 4000);
+        
+        // 처음에 첫 번째 이미지 표시
+        showSlides(slideIndex);
+  
+        function initMap() {
+          // 지도 초기화 설정
+          var mapOptions = {
+            center: new naver.maps.LatLng(37.5666103, 126.9783882), // 기본 위치 설정 (서울시청)
+            zoom: 13,
+          };
+        
+          // 지도 생성
+          var map = new naver.maps.Map('map', mapOptions);
+        
+          // 내 위치로 이동 버튼 클릭 시 동작
+          var myLocationBtn = document.getElementById('my-location-btn');
+          myLocationBtn.addEventListener('click', function () {
+            // 내 위치 정보를 받아옵니다.
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function (position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+        
+                // 받아온 위치로 지도의 중심을 이동시킵니다.
+                var myLocation = new naver.maps.LatLng(lat, lng);
+                map.setCenter(myLocation);
+        
+                // 기존에 있는 마커 제거
+                if (map.myLocationMarker) {
+                  map.myLocationMarker.setMap(null);
+                }
+        
+                // 새로운 마커 추가
+                map.myLocationMarker = new naver.maps.Marker({
+                  position: myLocation,
+                  map: map,
+                });
+              });
+            } else {
+              alert('내 위치 정보를 지원하지 않는 브라우저입니다.');
+            }
+          });
+        }
+        
+        // 네이버 지도 API 로드 시 initMap 함수 호출
+        naver.maps.onJSContentLoaded = initMap;
+        
+    </script>
+  </body>
 
 </html>
