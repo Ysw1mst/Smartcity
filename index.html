@@ -67,7 +67,7 @@
       background-color: #333333;
       color: white;
       position: absolute;
-      z-index: 1;
+      z-index: 2;
     }
     .button-container {
       display: flex;
@@ -103,6 +103,7 @@
   max-width: 2000px;
   margin: auto 0;
   margin-top: 500px;
+  z-index: 1;
 }
     #map {
       height: 500px;
@@ -488,7 +489,6 @@ function showNearestShelterText(nearestShelterName) {
     <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
     <a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank" class="quake-info-button">지진 정보 확인</a>
   </div> 
-      <div id="map"></div>
     </div>
     <!-- 아래의 <div> 태그를 추가하여 가장 가까운 대피소 정보를 출력할 공간을 만듭니다. -->
     <div id="nearestShelterInfo"></div>
