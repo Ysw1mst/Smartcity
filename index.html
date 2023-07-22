@@ -120,15 +120,17 @@
 
     /* 버튼 스타일 추가 */
     .button-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-      margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
     }
 
     .btn {
-      margin: 0 30px;
-    }
+        margin: 10px 0;
+      }
+
 
     /* 버튼과 도트 스타일 추가 */
     :root {
@@ -279,20 +281,20 @@
   
     <!-- 버튼을 담을 컨테이너 추가 -->
     <div class="button-container">
-      <div class="btn">
-        <span>내 위치로 이동</span>
-        <div class="dot"></div>
+        <div class="btn">
+          <span>내 위치로 이동</span>
+          <div class="dot"></div>
+        </div>
+        <div class="btn">
+          <span>가장 가까운 대피소</span>
+          <div class="dot"></div>
+        </div>
+        <div class="btn">
+          <span>지진 발생 장소</span>
+          <div class="dot"></div>
+        </div>
       </div>
-      <div class="btn">
-        <span>가장 가까운 대피소</span>
-        <div class="dot"></div>
-      </div>
-      <div class="btn">
-        <span>지진 발생 장소</span>
-        <div class="dot"></div>
-      </div>
-      </div>
-    </div>
+
   
     <!-- 이미지 슬라이드 컨테이너 추가 -->
     <div class="slideshow-container">
