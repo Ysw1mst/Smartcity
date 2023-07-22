@@ -130,7 +130,9 @@
     .btn {
         margin: 10px 0;
       }
-
+      #map {
+        margin-bottom: 0px; /* 지도와 버튼 사이의 마진 조정 */
+      }
 
     /* 버튼과 도트 스타일 추가 */
     :root {
@@ -222,12 +224,18 @@
         max-width: 100%;
       }
       .button-container {
+        display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
+        height: calc(100vh - 400px); /* 조정된 높이 계산하여 지도와 버튼 사이의 마진 조정 */
       }
+
+      /* 각 버튼 사이에 여백 추가 */
       .btn {
         margin: 10px 0;
       }
+    }
       .dropdown a {
         display: inline-block;
         font-size: 30px; /* 아이콘의 원래 크기 설정 */
