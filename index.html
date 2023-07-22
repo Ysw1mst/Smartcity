@@ -15,6 +15,7 @@
       background-color: #333;
       text-align: center;
       padding: 13px 0;
+      text-align: left;
     }
 
     .menu ul {
@@ -51,7 +52,40 @@
       display: block;
       margin: 0 auto;
       width: 100%;
-      /* max-width: 2000px; 이 부분을 지워주세요. */
+    }
+
+    /* Dropdown Menu */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      display: none;
+      background-color: #333;
+      position: absolute;
+      z-index: 1;
+      top: 100%;
+      left: 0;
+      min-width: 200px;
+      text-align: left;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu li {
+      display: block;
+    }
+
+    .dropdown-menu li a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+    }
+
+    .dropdown-menu li a:hover {
+      background-color: #555;
     }
 
     /* 버튼 스타일 추가 */
@@ -62,10 +96,8 @@
       margin-bottom: 20px;
     }
 
-
     .btn {
       margin: 0 30px;
-
     }
 
     /* 버튼과 도트 스타일 추가 */
@@ -164,6 +196,12 @@
       .btn {
         margin: 10px 0;
       }
+      .dropdown a {
+        display: inline-block;
+        font-size: 30px; /* 아이콘의 원래 크기 설정 */
+        line-height: 1; /* 아이콘의 높이를 조정하기 위해 line-height를 1로 설정 */
+        transform: scale(1.5); /* 아이콘의 크기를 1.5배로 키우기 */
+      }
       .slideshow-container {
         overflow-x: auto;
         white-space: nowrap;
@@ -188,11 +226,18 @@
     <div class="menu">
       <nav class="clearfix">
         <ul class="clearfix">
-          <li><a href="https://ysw1mst.github.io/Smartcity/">메인</a></li>
-          <li><a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do">지진 정보</a></li>
-          <li><a href="https://www.safekorea.go.kr/idsiSFK/neo/sfk/cs/sfc/res/victimList.jsp?acmdfclty_cd=2&emgPage=Y&menuSeq=855">지진 대피 장소</a></li>
-          <li><a href="https://www.sejong.go.kr/index.jsp">세종시</a></li>
-          <li><a href="https://www.youtube.com/watch?v=S9TZ4vsQiD4&ab_channel=MBCNEWSt">뉴스</a></li>
+          <!-- 드롭다운 메뉴 -->
+          <li class="dropdown">
+            <a href="#">≡</a>
+            <ul class="dropdown-menu">
+              <li><a href="https://ysw1mst.github.io/Smartcity/">메인</a></li>
+              <li><a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do">지진 정보</a></li>
+              <li><a href="https://www.safekorea.go.kr/idsiSFK/neo/sfk/cs/sfc/res/victimList.jsp?acmdfclty_cd=2&emgPage=Y&menuSeq=855">지진 대피 장소</a></li>
+              <li><a href="https://www.sejong.go.kr/index.jsp">세종시</a></li>
+            </ul>
+          </li>
+          <!-- 나머지 메뉴 항목들 -->
+          
         </ul>
         <a id="pull" href="#"></a>
       </nav>
