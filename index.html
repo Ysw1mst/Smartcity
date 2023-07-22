@@ -85,14 +85,27 @@
       padding: 20px;
       box-sizing: border-box;
     }
+        .banner-container {
+      width: 100%;
+      max-width: 2000px;
+      margin: 0 auto;
+    }
+    .banner {
+      width: 100%;
+      max-width: 2000px;
+      margin: 0 auto;
+    }
     .map-container {
       width: 100%;
+      max-width: 2000px;
+      margin: 0 auto;
       margin-top: 20px;
     }
     #map {
-      height: 600px;
+      height: 500px;
       width: 100%;
     }
+
     .manuals {
       display: flex;
       justify-content: space-between;
@@ -460,6 +473,9 @@ function showNearestShelterText(nearestShelterName) {
     </nav>
        <img src="상단배너.png" alt="이미지" style="display: block; margin: 0 auto; width: 100%; max-width: 2000px;">
     </div>
+    <div class="map-container">
+    <div id="map"></div>
+  </div>
   </body>
   
   <div id="container">
