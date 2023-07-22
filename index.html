@@ -98,15 +98,16 @@
   margin: 0 auto;
   display: block;
   margin-bottom: 20px;
-  position: relative; /* 수정된 스타일 */
+  position: relative;
+  z-index: 1; /* 배너의 z-index를 1로 설정하여 지도 위에 배치 */
 }
 
 .map-container {
   width: 100%;
   max-width: 2000px;
   margin: 0 auto;
-  z-index: 1;
-  position: relative; /* 수정된 스타일 */
+  z-index: 0; /* 지도의 z-index를 0으로 설정하여 배너 아래로 배치 */
+  position: relative;
 }
     #map {
       height: 500px;
