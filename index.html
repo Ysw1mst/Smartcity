@@ -231,13 +231,15 @@ function showPosition(position) {
   showCurrentLocationMarker(latitude, longitude);
 
   // CSV 파일 로드
-  fetch('./대피소.csv')
-    .then(response => response.text())
-    .then(data => {
-      markers = parseCSVData(data);
-      displayMarkers(markers);
-    })
-    .catch(error => console.error('Error:', error));
+fetch('./대피소.csv')
+  .then(response => response.arrayBuffer())
+  .then(data => {
+    const decoder = new TextDecoder('euc-kr'); 
+    const decodedData = decoder.decode(new Uint8Array(data));
+    markers = parseCSVData(decodedData);
+    displayMarkers(markers);
+  })
+  .catch(error => console.error('Error:', error));
 
   // 현재 위치 좌표를 주소로 변환
   naver.maps.Service.reverseGeocode({
@@ -376,7 +378,7 @@ function showNearestShelterText(nearestShelterName) {
 
             // 선택된 대피소 표시
             const infoWindowContent = `
-              <h3>가장 가까운 대피소 찾기</h3>
+              <h3>현재 위치에서 가장 가까운 대피소</h3>
               <p>대피소명: ${nextShelter.name}</p>
               <p>전화번호: ${nextShelter.phoneNumber}</p>
             `;
