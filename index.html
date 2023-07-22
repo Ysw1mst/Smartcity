@@ -476,14 +476,23 @@ function showNearestShelterText(nearestShelterName) {
     </nav>
        <img src="상단배너.png" alt="이미지" style="display: block; margin: 0 auto; width: 100%; max-width: 2000px;">
     </div>
-    <div class="map-container">
+  <div class="map-container">
+    <!-- 네이버 지도가 이곳에 표시됩니다. -->
     <div id="map"></div>
+    <div id="currentLocationText"></div>
+    <div id="nearestShelterText"></div>
+    <div id="nearestShelterInfo"></div>
   </div>
+  <div class="button-container">
+    <button onclick="findNextNearestShelter()">가까운 대피소 찾기</button>
+    <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
+    <a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank" class="quake-info-button">지진 정보 확인</a>
+  </div>
+
   </body>
   
-  <div id="container">
 
-    <div class="map-container">
+
 
     <div id="currentLocationText"></div>
     <div id="nearestShelterText"></div>
