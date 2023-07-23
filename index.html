@@ -4,16 +4,6 @@
   <meta charset="UTF-8">
   <title>지진 대피 시뮬레이션1</title>
   <style>
-        .banner-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 400px;
-    }
-    .banner-container img {
-      max-width: 100%;
-      max-height: 100%;
-    }
     nav{
     	font-size: 12pt;
     	font-family: 'PT Sans', Arial, Sans-serif;
@@ -347,7 +337,7 @@
           // 이전에 선택된 마커와 정보창 삭제
           if (currentLocationMarker) {
             currentLocationMarker.setMap(null);
-            currentLocationmenMarker = null;
+            currentLocationMarker = null;
           }
           if (currentLocationInfoWindow) {
             currentLocationInfoWindow.close();
@@ -381,9 +371,6 @@
       <a id="pull" href="#"></a>
     </nav>
     </div>
-    <img src="상단배너.png" alt="상단 배너" width="2000" height="400">
-
-    <div id="container">
   </body>
   <div id="container">
     <h2>           </h2>
@@ -395,7 +382,7 @@
     <div class="map-container">
       <div id="map"></div>
     </div>
-
+    </div>
     <div class="button-container">
       <button onclick="findNextNearestShelter()">가까운 대피소 찾기</button>
       <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
