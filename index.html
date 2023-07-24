@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>[스마트시티] 세이프티 넘버원</title>
   <style>
+
     nav{
     	font-size: 12pt;
     	font-family: 'PT Sans', Arial, Sans-serif;
@@ -123,11 +124,25 @@
     }
     .button-container button:hover,
     .button-container a:hover {
-      background-color: #45a049;
+      background-color: #000000;
     }
     .manuals-column {
       border: 3px solid #000000;
       padding: 10px;
+    }
+    body {
+      background-color: #6E6E6E;
+    }
+    .slideshow-container {
+      max-width: 1000px;
+      position: relative;
+      margin: auto;
+    }
+
+    /* 이미지 슬라이드 이미지 스타일 */
+    .slideshow-image {
+      width: 100%;
+      display: none;
     }
   </style>
   <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6lcb5pk9bx" charset="utf-8"></script>
@@ -375,22 +390,44 @@
   </body>
   <div id="container">
     <h2>           </h2>
-<h2>[스마트시티] 대피소 안내 페이지</h2>
-<p id="currentLocation">사용자님의 현재위치는 <span id="currentAddress"></span> 입니다.</p>
-<p>사용자님의 현재 위치에서 가장 가까운 지진 대피소는 <span id="nearestShelter"></span> 입니다.</p>
 
 
     <div class="map-container">
+      <h2>a</h2>
+      <h2>a</h2>
+      <h2>a</h2>
       <div id="map"></div>
     </div>
+   
 
     <div class="button-container">
       <button onclick="findNextNearestShelter()">가까운 대피소 찾기</button>
       <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
       <a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank" class="quake-info-button">지진 정보 확인</a>
     </div>
+
+  <div class="slideshow-container">
+    <!-- 이미지 1 -->
+    <img class="slideshow-image" src="이미지1.jpg" alt="이미지 1">
+    <!-- 이미지 2 -->
+    <img class="slideshow-image" src="이미지2.jpg" alt="이미지 2">
+    <!-- 이미지 3 -->
+    <img class="slideshow-image" src="이미지3.jpg" alt="이미지 3">
+    <!-- 이미지 4 -->
+    <img class="slideshow-image" src="이미지4.jpg" alt="이미지 4">
+    <!-- 이미지 5 -->
+    <img class="slideshow-image" src="이미지5.jpg" alt="이미지 5">
+    <!-- 이미지 6 -->
+    <img class="slideshow-image" src="이미지6.jpg" alt="이미지 6">
+    <!-- 이미지 7 -->
+    <img class="slideshow-image" src="이미지7.jpg" alt="이미지 7">
+    <!-- 이미지 8 -->
+    <img class="slideshow-image" src="이미지8.jpg" alt="이미지 8">
+
     <div id="currentLocationText"></div>
     <div id="nearestShelterText"></div>
+  </div>
+  
   </div>
   <script>
     initMap();
@@ -403,6 +440,23 @@
     function showNearestShelterText(nearestShelterName) {
       const nearestShelterText = document.getElementById("nearestShelterText");
       nearestShelterText.innerHTML = `가장 가까운 대피소는 <strong>${nearestShelterName}</strong> 입니다.`;
+    }
+        // JavaScript 코드
+        let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+      let i;
+      const slides = document.getElementsByClassName("slideshow-image");
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {
+        slideIndex = 1;
+      }
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 4000); // 4초마다 이미지 전환
     }
   </script>
 </body>
