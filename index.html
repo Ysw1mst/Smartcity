@@ -444,30 +444,63 @@ function showNearestShelterText(nearestShelterName) {
       <button onclick="navigateToNavigation()">네비게이션</button>
     </div>
     <script>
-      // ... 이전에 있는 코드들 ...
+      let currentLatitude; // 현재 위도 변수
+      let currentLongitude; // 현재 경도 변수
+      let nearestShelter; // 가장 가까운 대피소 정보 변수
+    
+      function initMap() {
+        getLocation();
+      }
+    
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+          alert("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+        }
+      }
+    
+      function showPosition(position) {
+        currentLatitude = position.coords.latitude;
+        currentLongitude = position.coords.longitude;
+    
+        var mapOptions = {
+          center: new naver.maps.LatLng(currentLatitude, currentLongitude),
+          zoom: 17
+        };
+        map = new naver.maps.Map(document.getElementById("map"), mapOptions);
+    
+        // 현재 위치 마커 추가
+        showCurrentLocationMarker(currentLatitude, currentLongitude);
+    
+        // CSV 파일 로드
+        fetch('./대피소.csv')
+          .then(response => response.text())
+          .then(data => {
+            markers = parseCSVData(data);
+            nearestShelter = findNextNearestShelterFromMarkers(currentLatitude, currentLongitude, -1);
+            displayMarkers(markers);
+          })
+          .catch(error => console.error('Error:', error));
+      }
+    
+      function showError(error) {
+        alert("위치 정보를 가져올 수 없습니다.");
+      }
     
       function navigateToNavigation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      const currentLatitude = position.coords.latitude;
-      const currentLongitude = position.coords.longitude;
-
-      const currentIndex = markers.findIndex(marker => marker.selected);
-      const nextShelter = findNextNearestShelterFromMarkers(currentLatitude, currentLongitude, currentIndex);
-
-      if (nextShelter) {
-        const navigationURL = `https://map.naver.com/v5/directions/-/${nextShelter.longitude},${nextShelter.latitude},${nextShelter.name}도착지/-/${currentLongitude},${currentLatitude},현재위치walk?c=17,0,0,0,dh`;
-        window.open(navigationURL, "_blank");
-      } else {
-        alert("가장 가까운 대피소 정보를 가져올 수 없습니다.");
+        if (nearestShelter) {
+          const currentLocationEncoded = encodeURIComponent('현재위치');
+          const nextShelterNameEncoded = encodeURIComponent(nearestShelter.name);
+    
+          const navigationURL = `https://map.naver.com/v5/directions/${currentLongitude},${currentLatitude},${currentLocationEncoded},,ADDRESS_POI/${nearestShelter.longitude},${nearestShelter.latitude},${nextShelterNameEncoded},36310096,PLACE_POI/-/walk?c=17,0,0,0,dh`;
+          window.open(navigationURL, "_blank");
+        } else {
+          alert("가장 가까운 대피소 정보를 가져올 수 없습니다.");
+        }
       }
-    }, showError);
-  } else {
-    alert("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
-  }
-}
-
-      // ... 이후에 있는 코드들 ...
+    
+      // 나머지 JavaScript 코드는 이전과 동일합니다.
     </script>
     
     
