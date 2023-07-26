@@ -370,6 +370,53 @@
         alert("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
       }
     }
+    function showEarthquakeLocations() {
+    fetch('./지진.csv')
+      .then(response => response.text())
+      .then(data => {
+        const earthquakes = parseCSVData(data);
+        displayEarthquakeMarkers(earthquakes);
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
+  function parseCSVData(csvData) {
+    const lines = csvData.split('\n');
+    const earthquakes = [];
+
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (line !== '') {
+        const values = line.split(',');
+        const latitude = parseFloat(values[0]);
+        const longitude = parseFloat(values[1]);
+
+        if (!isNaN(latitude) && !isNaN(longitude)) {
+          earthquakes.push({ latitude, longitude });
+        }
+      }
+    }
+
+    return earthquakes;
+  }
+
+  function displayEarthquakeMarkers(earthquakes) {
+    earthquakes.forEach(earthquake => {
+      const position = new naver.maps.LatLng(earthquake.latitude, earthquake.longitude);
+
+      const marker = new naver.maps.Marker({
+        position: position,
+        map: map,
+        icon: {
+          content: '<div style="width: 20px; height: 20px; background-color: red; border-radius: 50%;"></div>',
+          anchor: new naver.maps.Point(10, 10)
+        }
+      });
+
+      // 이벤트 리스너 등록 등의 추가 기능도 가능합니다.
+    });
+  }
+
   </script>
 </head>
 <body>
@@ -404,6 +451,9 @@
       <button onclick="findNextNearestShelter()">가까운 대피소 찾기</button>
       <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
       <a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank" class="quake-info-button">지진 정보 확인</a>
+      <button onclick="moveToCurrentLocation()">지진 위치 확인</button>
+      <button onclick="showEarthquakeLocations()">지진 위치 확인</button>
+    </div>
     </div>
     <img src="중단배너.png" alt="중단배너" style="width: 100%; height: auto;">
   <div class="slideshow-container">
