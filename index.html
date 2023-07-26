@@ -282,10 +282,11 @@
 
             // 선택된 대피소 표시
             const infoWindowContent = `
-              <h3>사용자님의 위치에서 가장 가까운 대피소는</h3>
-              <p>${nextShelter.name}</p> <h3>입니다</h3>
-              <p>전화번호: ${nextShelter.phoneNumber}</p>
-            `;
+      <h3>사용자님의 위치에서 가장 가까운 대피소는</h3>
+      <p>${nextShelter.name}</p> <h3>입니다</h3>
+      <p>전화번호: ${nextShelter.phoneNumber}</p>
+      <a href="https://m.map.naver.com/naver/naverMnavigation.nhn?dlevel=8&menu=location&lat=${latitude}&lng=${longitude}&pinType=site&pinId=${nextShelter.name}" target="_blank">네이버 네비게이션으로 길 찾기</a>
+    `;
             const infoWindow = new naver.maps.InfoWindow({ content: infoWindowContent });
 
             const marker = new naver.maps.Marker({
