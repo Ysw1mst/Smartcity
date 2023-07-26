@@ -453,7 +453,7 @@ function showNearestShelterText(nearestShelterName) {
             const nextShelter = findNextNearestShelterFromMarkers(currentLatitude, currentLongitude, currentIndex);
     
             if (nextShelter) {
-              const navigationURL = `https://map.naver.com/v5/directions/-/${currentLongitude},${currentLatitude},현재위치/-/${nextShelter.longitude},${nextShelter.latitude},${nextShelter.name}?c=15,0,0,0,dh`;
+              const navigationURL = `https://map.naver.com/v5/directions/-/walk${currentLongitude},${currentLatitude},현재위치/-/${nextShelter.longitude},${nextShelter.latitude},${nextShelter.name}?c=15,0,0,0,dh`;
               window.open(navigationURL, "_blank");
             }
           }, showError);
