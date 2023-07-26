@@ -282,11 +282,11 @@
 
             // 선택된 대피소 표시
             const infoWindowContent = `
-      <h3>사용자님의 위치에서 가장 가까운 대피소는</h3>
-      <p>${nextShelter.name}</p> <h3>입니다</h3>
-      <p>전화번호: ${nextShelter.phoneNumber}</p>
-      <a href="https://m.map.naver.com/naver/naverMnavigation.nhn?dlevel=8&menu=location&lat=${latitude}&lng=${longitude}&pinType=site&pinId=${nextShelter.name}" target="_blank">네이버 네비게이션으로 길 찾기</a>
-    `;
+              <h3>사용자님의 위치에서 가장 가까운 대피소는</h3>
+              <p>${nextShelter.name}</p> <h3>입니다</h3>
+              <p>전화번호: ${nextShelter.phoneNumber}</p>
+              
+            `;
             const infoWindow = new naver.maps.InfoWindow({ content: infoWindowContent });
 
             const marker = new naver.maps.Marker({
@@ -416,6 +416,8 @@ function showNearestShelterText(nearestShelterName) {
       <button onclick="findNextNearestShelter()">가까운 대피소 찾기</button>
       <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
       <a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank" class="quake-info-button">지진 정보 확인</a>
+      <a href="https://m.map.naver.com/naver/naverMnavigation.nhn?dlevel=8&menu=location&lat=${latitude}&lng=${longitude}&pinType=site&pinId=${nextShelter.name}" target="_blank" class="quake-info-button">지진 정보 확인</a>
+      
       
     </div>
     <img src="중단배너.png" alt="중단배너" style="width: 100%; height: auto;">
