@@ -441,7 +441,7 @@ function showNearestShelterText(nearestShelterName) {
       <button onclick="navigateToNavigation()">네비게이션</button>
     </div>
     <script>
-      // ... 이전에 있는 JavaScript 코드 ...
+      // ... 이전에 있는 코드들 ...
     
       function navigateToNavigation() {
         if (navigator.geolocation) {
@@ -453,7 +453,7 @@ function showNearestShelterText(nearestShelterName) {
             const nextShelter = findNextNearestShelterFromMarkers(currentLatitude, currentLongitude, currentIndex);
     
             if (nextShelter) {
-              const navigationURL = `https://map.naver.com/v5/directions/-/${currentLongitude},${currentLatitude},현재위치/-/${nextShelter.longitude},${nextShelter.latitude},${nextShelter.name}walk?c=15,0,0,0,dh`;
+              const navigationURL = `https://map.naver.com/v5/directions/-/${currentLongitude},${currentLatitude},현재위치/-/${nextShelter.longitude},${nextShelter.latitude},${nextShelter.name}walk?c=17,0,0,0,dh`;
               window.open(navigationURL, "_blank");
             }
           }, showError);
@@ -462,8 +462,9 @@ function showNearestShelterText(nearestShelterName) {
         }
       }
     
-      // ... 이전에 있는 JavaScript 코드 ...
+      // ... 이후에 있는 코드들 ...
     </script>
+    
     
     <img src="중단배너.png" alt="중단배너" style="width: 100%; height: auto;">
   <div class="slideshow-container">
