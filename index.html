@@ -370,6 +370,17 @@
         alert("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
       }
     }
+    initMap();
+
+function showCurrentLocationText(latitude, longitude) {
+  const currentLocationText = document.getElementById("currentLocationText");
+  currentLocationText.innerHTML = `현재위치: 위도 ${latitude.toFixed(6)}, 경도 ${longitude.toFixed(6)}`;
+}
+
+function showNearestShelterText(nearestShelterName) {
+  const nearestShelterText = document.getElementById("nearestShelterText");
+  nearestShelterText.innerHTML = `가장 가까운 대피소는 <strong>${nearestShelterName}</strong> 입니다.`;
+}
   </script>
 </head>
 <body>
@@ -431,17 +442,7 @@
   
   </div>
   <script>
-    initMap();
 
-    function showCurrentLocationText(latitude, longitude) {
-      const currentLocationText = document.getElementById("currentLocationText");
-      currentLocationText.innerHTML = `현재위치: 위도 ${latitude.toFixed(6)}, 경도 ${longitude.toFixed(6)}`;
-    }
-
-    function showNearestShelterText(nearestShelterName) {
-      const nearestShelterText = document.getElementById("nearestShelterText");
-      nearestShelterText.innerHTML = `가장 가까운 대피소는 <strong>${nearestShelterName}</strong> 입니다.`;
-    }
         // JavaScript 코드
         let slideIndex = 0;
     showSlides();
