@@ -267,6 +267,10 @@
           const nextShelter = findNextNearestShelterFromMarkers(currentLatitude, currentLongitude, currentIndex);
 
           if (nextShelter) {
+
+            const currentLatitude = currentLocationMarker.getPosition().y;
+    const currentLongitude = currentLocationMarker.getPosition().x;
+
             // 이전에 선택된 마커와 정보창 삭제
             if (currentLocationMarker) {
               currentLocationMarker.setMap(null);
@@ -416,7 +420,7 @@ function showNearestShelterText(nearestShelterName) {
       <button onclick="findNextNearestShelter()">가까운 대피소 찾기</button>
       <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
       <a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank" class="quake-info-button">지진 정보 확인</a>
-      <a href="https://m.map.naver.com/naver/naverMnavigation.nhn?dlevel=8&menu=location&lat=${latitude}&lng=${longitude}&pinType=site&pinId=${nextShelter.name}" target="_blank" class="quake-info-button">지진 정보 확인</a>
+      <a href="https://m.map.naver.com/naver/naverMnavigation.nhn?dlevel=8&menu=location&lat=${latitude}&lng=${longitude}&pinType=site&pinId=${nextShelter.name}" target="_blank" class="quake-info-button">네비게이션</a>
       
       
     </div>
