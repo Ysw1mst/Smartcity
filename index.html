@@ -420,7 +420,7 @@ function showNearestShelterText(nearestShelterName) {
       <button onclick="findNextNearestShelter()">가까운 대피소 찾기</button>
       <button onclick="moveToCurrentLocation()">내 위치로 이동</button>
       <a href="https://www.weather.go.kr/w/eqk-vol/search/korea.do" target="_blank" class="quake-info-button">지진 정보 확인</a>
-      <a href="https://m.map.naver.com/naver/naverMnavigation.nhn?dlevel=8&menu=location&lat=${latitude}&lng=${longitude}&pinType=site&pinId=${nextShelter.name}" target="_blank" class="quake-info-button">네비게이션</a>
+      <a href="https://map.naver.com/v5/directions/-/${currentLongitude},${currentLatitude},현재위치/-/${nextShelter.longitude},${nextShelter.latitude},${nextShelter.name}?c=15,0,0,0,dh" target="_blank" class="quake-info-button">네비게이션</a>
       
       
     </div>
