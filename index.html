@@ -282,8 +282,8 @@
 
             // 선택된 대피소 표시
             const infoWindowContent = `
-              <h3>가장 가까운 대피소 찾기</h3>
-              <p>대피소명: ${nextShelter.name}</p>
+              <h3>사용자님의 위치에서 가장 가까운 대피소는</h3>
+              <p>${nextShelter.name}</p> <h3>입니다</h3>
               <p>전화번호: ${nextShelter.phoneNumber}</p>
             `;
             const infoWindow = new naver.maps.InfoWindow({ content: infoWindowContent });
